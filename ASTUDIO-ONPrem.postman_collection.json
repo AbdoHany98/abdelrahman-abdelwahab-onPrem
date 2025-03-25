@@ -1,0 +1,816 @@
+{
+	"info": {
+		"_postman_id": "15f37092-2d42-4781-b65d-29ff5e8ff72d",
+		"name": "ASTUDIO-ONPrem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32632854"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"user@company.com\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"name\": \"Product Name\",\r\n            \"price\": 100.50,\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"name\": \"Product Name\",\r\n            \"price\": 500.50,\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/orders",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 06:59:07 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 06:59:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Order created successfully\",\n    \"order\": {\n        \"order_number\": \"SO000002\",\n        \"status\": \"pending_approval\",\n        \"total_amount\": 1001,\n        \"updated_at\": \"2025-03-25T06:59:07.000000Z\",\n        \"created_at\": \"2025-03-25T06:59:07.000000Z\",\n        \"id\": 6,\n        \"items\": [\n            {\n                \"id\": 3,\n                \"order_id\": 6,\n                \"product_name\": \"Product Name\",\n                \"quantity\": 2,\n                \"price\": 500.5,\n                \"total\": 1001,\n                \"created_at\": \"2025-03-25T06:59:07.000000Z\",\n                \"updated_at\": \"2025-03-25T06:59:07.000000Z\"\n            }\n        ]\n    },\n    \"requires_approval\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/orders/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"5"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "show",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/orders/5",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 06:58:43 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 06:58:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order\": {\n        \"id\": 5,\n        \"order_number\": \"SO000001\",\n        \"status\": \"approved\",\n        \"total_amount\": 201,\n        \"requires_approval\": false,\n        \"approved_by\": null,\n        \"created_at\": \"2025-03-25T06:55:26.000000Z\",\n        \"updated_at\": \"2025-03-25T06:55:26.000000Z\",\n        \"items\": [\n            {\n                \"id\": 2,\n                \"order_id\": 5,\n                \"product_name\": \"Product Name\",\n                \"quantity\": 2,\n                \"price\": 100.5,\n                \"total\": 201,\n                \"created_at\": \"2025-03-25T06:55:26.000000Z\",\n                \"updated_at\": \"2025-03-25T06:55:26.000000Z\"\n            }\n        ],\n        \"status_history\": [\n            {\n                \"id\": 1,\n                \"order_id\": 5,\n                \"status\": \"approved\",\n                \"user_id\": 2,\n                \"notes\": null,\n                \"created_at\": \"2025-03-25T06:55:26.000000Z\",\n                \"updated_at\": \"2025-03-25T06:55:26.000000Z\"\n            }\n        ],\n        \"approver\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"items\":[\r\n        {\r\n            \"name\": \"Product Name Update\",\r\n            \"price\": 200.50,\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/orders/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"5"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Updating approved Order",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"items\":[\r\n        {\r\n            \"name\": \"Product Name Update\",\r\n            \"price\": 200.50,\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/orders/5",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"5"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:01:43 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:01:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Cannot modify an order that has been processed.\"\n}"
+						},
+						{
+							"name": "Updating",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"items\":[\r\n        {\r\n            \"name\": \"Product Name Update\",\r\n            \"price\": 500.50,\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/orders/6",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:10:39 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:10:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Order updated successfully\",\n    \"order\": {\n        \"id\": 6,\n        \"order_number\": \"SO000002\",\n        \"status\": \"pending_approval\",\n        \"total_amount\": 1001,\n        \"requires_approval\": true,\n        \"approved_by\": null,\n        \"created_at\": \"2025-03-25T06:59:07.000000Z\",\n        \"updated_at\": \"2025-03-25T07:10:39.000000Z\",\n        \"items\": [\n            {\n                \"id\": 8,\n                \"order_id\": 6,\n                \"product_name\": \"Product Name Update\",\n                \"quantity\": 2,\n                \"price\": 500.5,\n                \"total\": 1001,\n                \"created_at\": \"2025-03-25T07:10:39.000000Z\",\n                \"updated_at\": \"2025-03-25T07:10:39.000000Z\"\n            }\n        ]\n    },\n    \"requires_approval\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Approving",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/orders/6/approve",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"6",
+								"approve"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Approved",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"approved\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/orders/6/approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"6",
+										"approve"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:14:18 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:14:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Order approved\",\n    \"order\": {\n        \"id\": 6,\n        \"order_number\": \"SO000002\",\n        \"status\": \"approved\",\n        \"total_amount\": \"1001.00\",\n        \"requires_approval\": false,\n        \"approved_by\": 2,\n        \"created_at\": \"2025-03-25T06:59:07.000000Z\",\n        \"updated_at\": \"2025-03-25T07:14:18.000000Z\"\n    }\n}"
+						},
+						{
+							"name": "rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"approved\":0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/orders/7/approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"7",
+										"approve"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:15:00 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:15:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Order rejected\",\n    \"order\": {\n        \"id\": 7,\n        \"order_number\": \"SO000003\",\n        \"status\": \"rejected\",\n        \"total_amount\": \"1001.00\",\n        \"requires_approval\": false,\n        \"approved_by\": null,\n        \"created_at\": \"2025-03-25T07:14:42.000000Z\",\n        \"updated_at\": \"2025-03-25T07:15:00.000000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "ordersHistory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/orders/history",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"history"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/orders/history",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"history"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:21:25 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 07:21:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.4"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"current_page\": 1,\n    \"data\": [\n        {\n            \"id\": 7,\n            \"order_number\": \"SO000003\",\n            \"status\": \"rejected\",\n            \"total_amount\": \"1001.00\",\n            \"requires_approval\": false,\n            \"approved_by\": null,\n            \"created_at\": \"2025-03-25T07:14:42.000000Z\",\n            \"updated_at\": \"2025-03-25T07:15:00.000000Z\",\n            \"items\": [\n                {\n                    \"id\": 9,\n                    \"order_id\": 7,\n                    \"product_name\": \"Product\",\n                    \"quantity\": 1,\n                    \"price\": 1001,\n                    \"total\": 1001,\n                    \"created_at\": \"2025-03-25T07:14:42.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:14:42.000000Z\"\n                }\n            ],\n            \"status_history\": [\n                {\n                    \"id\": 9,\n                    \"order_id\": 7,\n                    \"status\": \"pending_approval\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T07:14:42.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:14:42.000000Z\"\n                },\n                {\n                    \"id\": 10,\n                    \"order_id\": 7,\n                    \"status\": \"rejected\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T07:15:00.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:15:00.000000Z\"\n                }\n            ]\n        },\n        {\n            \"id\": 6,\n            \"order_number\": \"SO000002\",\n            \"status\": \"approved\",\n            \"total_amount\": \"1001.00\",\n            \"requires_approval\": false,\n            \"approved_by\": 2,\n            \"created_at\": \"2025-03-25T06:59:07.000000Z\",\n            \"updated_at\": \"2025-03-25T07:14:18.000000Z\",\n            \"items\": [\n                {\n                    \"id\": 8,\n                    \"order_id\": 6,\n                    \"product_name\": \"Product Name Update\",\n                    \"quantity\": 2,\n                    \"price\": 500.5,\n                    \"total\": 1001,\n                    \"created_at\": \"2025-03-25T07:10:39.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:10:39.000000Z\"\n                }\n            ],\n            \"status_history\": [\n                {\n                    \"id\": 2,\n                    \"order_id\": 6,\n                    \"status\": \"pending_approval\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T06:59:07.000000Z\",\n                    \"updated_at\": \"2025-03-25T06:59:07.000000Z\"\n                },\n                {\n                    \"id\": 3,\n                    \"order_id\": 6,\n                    \"status\": \"pending_approval\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T07:02:16.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:02:16.000000Z\"\n                },\n                {\n                    \"id\": 4,\n                    \"order_id\": 6,\n                    \"status\": \"pending_approval\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T07:03:33.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:03:33.000000Z\"\n                },\n                {\n                    \"id\": 5,\n                    \"order_id\": 6,\n                    \"status\": \"pending_approval\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T07:08:17.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:08:17.000000Z\"\n                },\n                {\n                    \"id\": 6,\n                    \"order_id\": 6,\n                    \"status\": \"pending_approval\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T07:08:29.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:08:29.000000Z\"\n                },\n                {\n                    \"id\": 7,\n                    \"order_id\": 6,\n                    \"status\": \"pending_approval\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T07:10:39.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:10:39.000000Z\"\n                },\n                {\n                    \"id\": 8,\n                    \"order_id\": 6,\n                    \"status\": \"approved\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T07:14:18.000000Z\",\n                    \"updated_at\": \"2025-03-25T07:14:18.000000Z\"\n                }\n            ]\n        },\n        {\n            \"id\": 5,\n            \"order_number\": \"SO000001\",\n            \"status\": \"approved\",\n            \"total_amount\": \"201.00\",\n            \"requires_approval\": false,\n            \"approved_by\": null,\n            \"created_at\": \"2025-03-25T06:55:26.000000Z\",\n            \"updated_at\": \"2025-03-25T06:55:26.000000Z\",\n            \"items\": [\n                {\n                    \"id\": 2,\n                    \"order_id\": 5,\n                    \"product_name\": \"Product Name\",\n                    \"quantity\": 2,\n                    \"price\": 100.5,\n                    \"total\": 201,\n                    \"created_at\": \"2025-03-25T06:55:26.000000Z\",\n                    \"updated_at\": \"2025-03-25T06:55:26.000000Z\"\n                }\n            ],\n            \"status_history\": [\n                {\n                    \"id\": 1,\n                    \"order_id\": 5,\n                    \"status\": \"approved\",\n                    \"user_id\": 2,\n                    \"notes\": null,\n                    \"created_at\": \"2025-03-25T06:55:26.000000Z\",\n                    \"updated_at\": \"2025-03-25T06:55:26.000000Z\"\n                }\n            ]\n        }\n    ],\n    \"first_page_url\": \"http://127.0.0.1:8000/api/orders/history?page=1\",\n    \"from\": 1,\n    \"last_page\": 1,\n    \"last_page_url\": \"http://127.0.0.1:8000/api/orders/history?page=1\",\n    \"links\": [\n        {\n            \"url\": null,\n            \"label\": \"&laquo; Previous\",\n            \"active\": false\n        },\n        {\n            \"url\": \"http://127.0.0.1:8000/api/orders/history?page=1\",\n            \"label\": \"1\",\n            \"active\": true\n        },\n        {\n            \"url\": null,\n            \"label\": \"Next &raquo;\",\n            \"active\": false\n        }\n    ],\n    \"next_page_url\": null,\n    \"path\": \"http://127.0.0.1:8000/api/orders/history\",\n    \"per_page\": 20,\n    \"prev_page_url\": null,\n    \"to\": 3,\n    \"total\": 3\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "1|zDQHdrIeG8G22u1yJdEMWxUe13BM0dsKijeyVwIzb63d9bf6",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "1|T8z01HSF8bUCQ0P2uTg8oAGsyLPqGeaq4FGRoqWTcc7e7607",
+			"type": "string"
+		}
+	]
+}
