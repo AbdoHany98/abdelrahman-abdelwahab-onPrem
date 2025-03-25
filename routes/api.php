@@ -11,7 +11,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/orders', [OrderController::class, 'create']);
     Route::put('/orders/{order}', [OrderController::class, 'update']);
+    Route::get('/orders/history', [OrderController::class, 'orderHistory']);
     Route::get('/orders/{order}', [OrderController::class, 'show']);
     Route::post('/orders/{order}/approve', [OrderController::class, 'processApproval']);
-    Route::get('/orders/history', [OrderController::class, 'orderHistory']);
 });

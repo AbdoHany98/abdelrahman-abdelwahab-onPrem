@@ -83,7 +83,7 @@ class OrderController extends Controller
 
     public function orderHistory(): JsonResponse
     {
-        $orders = Order::with('items')
+        $orders = Order::with('items','statusHistory')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
