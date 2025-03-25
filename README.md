@@ -49,4 +49,4 @@ php artisan test
 # Or for specific test
 php artisan test --filter OrderServiceTest
 Postman Collection
-Import business-workflow-api.postman_collection.json for API endpoint documentation.
+Import ASTUDIO-ONPrem.postman_collection.json for API endpoint documentation.
