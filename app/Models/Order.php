@@ -9,17 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Order extends Model
 {
     protected $fillable = [
-        'order_number', 
-        'status', 
-        'total_amount', 
-        'requires_approval',
+        'order_number',
+        'status',
+        'total_amount',
         'approved_by'
     ];
-
-    protected $casts = [
-        'requires_approval' => 'boolean',
-        'total_amount' => 'float'
-    ];
+    protected $appends = ['requires_approval'];
 
     public function items(): HasMany
     {
@@ -36,13 +31,8 @@ class Order extends Model
         return $this->hasMany(OrderStatusHistory::class);
     }
 
-    public function calculateTotal(): float
+    public function getRequiresApprovalAttribute()
     {
-        return $this->items()->sum('total');
-    }
-
-    public function requiresApproval(): bool
-    {
-        return $this->total_amount > 1000;
+        return $this->status === 'pending_approval';
     }
 }
