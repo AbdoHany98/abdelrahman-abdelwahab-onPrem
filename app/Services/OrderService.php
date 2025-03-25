@@ -2,13 +2,16 @@
 
 namespace App\Services;
 
-use App\Models\Order;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use App\Models\Order;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use App\Traits\PreventOrderModification;
 
 class OrderService
 {
+    use PreventOrderModification;
+
     public function createOrder(array $data, User $user): Order
     {
         return DB::transaction(function () use ($data, $user) {
@@ -27,7 +30,7 @@ class OrderService
             foreach ($data['items'] as $itemData) {
                 $itemTotal = $itemData['price'] * $itemData['quantity'];
                 $order->items()->create([
-                    'name' => $itemData['name'],
+                    'product_name' => $itemData['name'],
                     'price' => $itemData['price'],
                     'quantity' => $itemData['quantity'],
                     'total' => $itemTotal
@@ -42,6 +45,41 @@ class OrderService
             ]);
 
             // Create initial status history
+            $this->createStatusHistory($order, $order->status, $user);
+
+            return $order;
+        });
+    }
+
+    public function updateOrder(Order $order, array $data, User $user): Order
+    {
+        // Prevent modifications to processed orders
+        $this->guardOrderModification($order);
+
+        return DB::transaction(function () use ($order, $data, $user) {
+            // Clear existing items
+            $order->items()->delete();
+
+            // Add new items
+            $totalAmount = 0;
+            foreach ($data['items'] as $itemData) {
+                $itemTotal = $itemData['price'] * $itemData['quantity'];
+                $order->items()->create([
+                    'product_name' => $itemData['name'],
+                    'price' => $itemData['price'],
+                    'quantity' => $itemData['quantity'],
+                    'total' => $itemTotal
+                ]);
+                $totalAmount += $itemTotal;
+            }
+
+            // Update order
+            $order->update([
+                'total_amount' => $totalAmount,
+                'status' => $totalAmount > 1000 ? 'pending_approval' : 'draft'
+            ]);
+
+            // Create status history entry
             $this->createStatusHistory($order, $order->status, $user);
 
             return $order;
@@ -73,8 +111,8 @@ class OrderService
     {
         // Implement a thread-safe, sequential order number generation
         $lastOrder = Order::orderBy('id', 'desc')->first();
-        $sequence = $lastOrder ? ((int)substr($lastOrder->order_number, 2)) + 1 : 1;
-        
+        $sequence = $lastOrder ? ((int) substr($lastOrder->order_number, 2)) + 1 : 1;
+
         return 'SO' . str_pad($sequence, 6, '0', STR_PAD_LEFT);
     }
 
